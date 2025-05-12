@@ -1,35 +1,810 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Xandyr Brennan | Portfolio</title>
-    <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Dev Portfolio - Interactive Storybook</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --page-background: #f4f1de;
+            --text-color: #2c3e50;
+            --accent-color: #8e44ad;
+            --page-border-color: #a0522d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Open Sans', sans-serif;
+            background-color: #d2b48c;
+            perspective: 1500px;
+            overflow: hidden;
+        }
+
+        .desk {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            background-color: #8B4513;
+            transform: perspective(1500px) rotateX(30deg);
+            box-shadow: 0 -10px 20px rgba(0,0,0,0.3);
+        }
+
+        .book-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotateX(20deg) rotateY(-10deg);
+            width: 800px;
+            height: 600px;
+            transition: all 0.8s ease;
+        }
+
+        .book {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s ease;
+        }
+
+            .book.open {
+                transform: rotateY(-180deg);
+            }
+
+        .book-page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            transform-origin: left center;
+            backface-visibility: hidden;
+            background-color: #f4f1de;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.1);
+            border: 15px solid #a0522d;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page-front {
+            z-index: 2;
+            transform: rotateY(0deg);
+            background-color: white;
+        }
+
+        .page-back {
+            transform: rotateY(180deg);
+            background-color: white;
+        }
+
+        .page-content {
+            padding: 40px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .page-header {
+            font-family: 'Merriweather', serif;
+            color: var(--accent-color);
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .project-card {
+            background-color: rgba(142, 68, 173, 0.05);
+            border: 2px solid #e0e0e0;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+            .project-card:hover {
+                transform: scale(1.02);
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            }
+
+            .project-card img {
+                max-width: 100%;
+                height: 250px;
+                object-fit: cover;
+                margin-bottom: 15px;
+            }
+
+        .page-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+        }
+
+        .page-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: 'Merriweather', serif;
+            transition: background-color 0.3s ease;
+        }
+
+            .page-btn:hover {
+                background-color: #6c3483;
+            }
+
+        #introPage, #projectsPage, #skillsPage, #contactPage {
+            transform: rotateY(180deg);
+        }
+
+        @media (max-width: 900px) {
+            .book-container {
+                width: 95%;
+                height: 70%;
+                transform: translate(-50%, -50%) rotateX(0) rotateY(0);
+            }
+
+            .desk {
+                transform: perspective(1500px) rotateX(0);
+            }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Your Name</h1>
-        <p>Web Developer | Designer | Engineer</p>
-    </header>
+    <div class="desk"></div>
+    <div class="book-container">
+        <div class="book">
+            <div class="book-page page-front" id="coverPage">
+                <div class="page-content">
+                    <h1 class="page-header">Game Dev Portfolio</h1>
+                    <p>Welcome to my digital storybook of game development adventures!</p>
+                </div>
+            </div>
 
-    <section id="about">
-        <h2>About Me</h2>
-        <p>I'm a developer passionate about building modern web apps.</p>
-    </section>
+            <div class="book-page" id="introPage">
+                <div class="page-content">
+                    <h2 class="page-header">About Me</h2>
+                    <p>I'm a passionate game developer crafting interactive worlds and unforgettable experiences. My journey in game development is driven by creativity, innovation, and a love for storytelling through interactive media.</p>
+                </div>
+            </div>
 
-    <section id="projects">
-        <h2>Projects</h2>
-        <div class="project">
-            <h3>Project Title</h3>
-            <p>Description of the project.</p>
-            <a href="https://github.com/yourusername/project">View on GitHub</a>
+            <div class="book-page" id="projectsPage">
+                <div class="page-content">
+                    <h2 class="page-header">My Game Projects</h2>
+                    <div class="project-card">
+                        <img src="/api/placeholder/400/250" alt="Project Quantum">
+                        <h3>Project Quantum</h3>
+                        <p>A sci-fi puzzle platformer exploring time manipulation mechanics. Developed using Unity, this game challenges players to solve complex puzzles by controlling time itself.</p>
+                    </div>
+                    <div class="project-card">
+                        <img src="/api/placeholder/400/250" alt="Medieval Tactics">
+                        <h3>Medieval Tactics</h3>
+                        <p>A strategic RPG with innovative combat and storytelling systems. Built in Unreal Engine, this game offers deep tactical gameplay and rich narrative experiences.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="book-page" id="skillsPage">
+                <div class="page-content">
+                    <h2 class="page-header">Skills & Technologies</h2>
+                    <ul>
+                        <li>Game Engines: Unity, Unreal Engine</li>
+                        <li>Programming Languages: C#, C++, Python</li>
+                        <li>Game Design: Mechanics Development, Level Design</li>
+                        <li>Tools: Blender, Photoshop, Git</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="book-page" id="contactPage">
+                <div class="page-content">
+                    <h2 class="page-header">Let's Connect</h2>
+                    <p>Interested in collaboration or want to discuss game development?</p>
+                    <div class="social-links">
+                        <a href="#">GitHub</a>
+                        <a href="#">LinkedIn</a>
+                        <a href="#">Portfolio</a>
+                        <a href="#">Email</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="book-page page-back">
+                <div class="page-content">
+                    <h2 class="page-header">Thank You</h2>
+                    <p>Thanks for exploring my game development journey. Each page tells a story of creativity, challenge, and passion.</p>
+                </div>
+            </div>
         </div>
-    </section>
 
-    <section id="contact">
-        <h2>Contact</h2>
-        <p>Email: you@example.com</p>
-        <p><a href="https://github.com/yourusername">GitHub</a></p>
-    </section>
+        <div class="page-controls">
+            <button class="page-btn" id="prevPage">Previous</button>
+            <button class="page-btn" id="nextPage">Next</button>
+        </div>
+    </div>
+
+    <script>
+        const book = document.querySelector('.book');
+        const prevBtn = document.getElementById('prevPage');
+        const nextBtn = document.getElementById('nextPage');
+        const pages = ['coverPage', 'introPage', 'projectsPage', 'skillsPage', 'contactPage'];
+        let currentPageIndex = 0;
+
+        function updatePageVisibility() {
+            pages.forEach((pageId, index) => {
+                const page = document.getElementById(pageId);
+                if (index <= currentPageIndex) {
+                    page.style.transform = 'rotateY(0deg)';
+                } else {
+                    page.style.transform = 'rotateY(180deg)';
+                }
+            });
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (currentPageIndex < pages.length - 1) {
+                currentPageIndex++;
+                updatePageVisibility();
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentPageIndex > 0) {
+                currentPageIndex--;
+                updatePageVisibility();
+            }
+        });
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Dev Portfolio - Interactive Storybook</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --page-background: #f4f1de;
+            --text-color: #2c3e50;
+            --accent-color: #8e44ad;
+            --page-border-color: #a0522d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Open Sans', sans-serif;
+            background-color: #d2b48c;
+            perspective: 1500px;
+            overflow: hidden;
+        }
+
+        .desk {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            background-color: #8B4513;
+            transform: perspective(1500px) rotateX(30deg);
+            box-shadow: 0 -10px 20px rgba(0,0,0,0.3);
+        }
+
+        .book-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotateX(20deg) rotateY(-10deg);
+            width: 800px;
+            height: 600px;
+            transition: all 0.8s ease;
+        }
+
+        .book {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s ease;
+        }
+
+            .book.open {
+                transform: rotateY(-180deg);
+            }
+
+        .book-page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            transform-origin: left center;
+            backface-visibility: hidden;
+            background-color: #f4f1de;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.1);
+            border: 15px solid #a0522d;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page-front {
+            z-index: 2;
+            transform: rotateY(0deg);
+            background-color: white;
+        }
+
+        .page-back {
+            transform: rotateY(180deg);
+            background-color: white;
+        }
+
+        .page-content {
+            padding: 40px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .page-header {
+            font-family: 'Merriweather', serif;
+            color: var(--accent-color);
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .project-card {
+            background-color: rgba(142, 68, 173, 0.05);
+            border: 2px solid #e0e0e0;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+            .project-card:hover {
+                transform: scale(1.02);
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            }
+
+            .project-card img {
+                max-width: 100%;
+                height: 250px;
+                object-fit: cover;
+                margin-bottom: 15px;
+            }
+
+        .page-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+        }
+
+        .page-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: 'Merriweather', serif;
+            transition: background-color 0.3s ease;
+        }
+
+            .page-btn:hover {
+                background-color: #6c3483;
+            }
+
+        #introPage, #projectsPage, #skillsPage, #contactPage {
+            transform: rotateY(180deg);
+        }
+
+        @media (max-width: 900px) {
+            .book-container {
+                width: 95%;
+                height: 70%;
+                transform: translate(-50%, -50%) rotateX(0) rotateY(0);
+            }
+
+            .desk {
+                transform: perspective(1500px) rotateX(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="desk"></div>
+    <div class="book-container">
+        <div class="book">
+            <div class="book-page page-front" id="coverPage">
+                <div class="page-content">
+                    <h1 class="page-header">Game Dev Portfolio</h1>
+                    <p>Welcome to my digital storybook of game development adventures!</p>
+                </div>
+            </div>
+
+            <div class="book-page" id="introPage">
+                <div class="page-content">
+                    <h2 class="page-header">About Me</h2>
+                    <p>I'm a passionate game developer crafting interactive worlds and unforgettable experiences. My journey in game development is driven by creativity, innovation, and a love for storytelling through interactive media.</p>
+                </div>
+            </div>
+
+            <div class="book-page" id="projectsPage">
+                <div class="page-content">
+                    <h2 class="page-header">My Game Projects</h2>
+                    <div class="project-card">
+                        <img src="/api/placeholder/400/250" alt="Project Quantum">
+                        <h3>Project Quantum</h3>
+                        <p>A sci-fi puzzle platformer exploring time manipulation mechanics. Developed using Unity, this game challenges players to solve complex puzzles by controlling time itself.</p>
+                    </div>
+                    <div class="project-card">
+                        <img src="/api/placeholder/400/250" alt="Medieval Tactics">
+                        <h3>Medieval Tactics</h3>
+                        <p>A strategic RPG with innovative combat and storytelling systems. Built in Unreal Engine, this game offers deep tactical gameplay and rich narrative experiences.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="book-page" id="skillsPage">
+                <div class="page-content">
+                    <h2 class="page-header">Skills & Technologies</h2>
+                    <ul>
+                        <li>Game Engines: Unity, Unreal Engine</li>
+                        <li>Programming Languages: C#, C++, Python</li>
+                        <li>Game Design: Mechanics Development, Level Design</li>
+                        <li>Tools: Blender, Photoshop, Git</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="book-page" id="contactPage">
+                <div class="page-content">
+                    <h2 class="page-header">Let's Connect</h2>
+                    <p>Interested in collaboration or want to discuss game development?</p>
+                    <div class="social-links">
+                        <a href="#">GitHub</a>
+                        <a href="#">LinkedIn</a>
+                        <a href="#">Portfolio</a>
+                        <a href="#">Email</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="book-page page-back">
+                <div class="page-content">
+                    <h2 class="page-header">Thank You</h2>
+                    <p>Thanks for exploring my game development journey. Each page tells a story of creativity, challenge, and passion.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-controls">
+            <button class="page-btn" id="prevPage">Previous</button>
+            <button class="page-btn" id="nextPage">Next</button>
+        </div>
+    </div>
+
+    <script>
+        const book = document.querySelector('.book');
+        const prevBtn = document.getElementById('prevPage');
+        const nextBtn = document.getElementById('nextPage');
+        const pages = ['coverPage', 'introPage', 'projectsPage', 'skillsPage', 'contactPage'];
+        let currentPageIndex = 0;
+
+        function updatePageVisibility() {
+            pages.forEach((pageId, index) => {
+                const page = document.getElementById(pageId);
+                if (index <= currentPageIndex) {
+                    page.style.transform = 'rotateY(0deg)';
+                } else {
+                    page.style.transform = 'rotateY(180deg)';
+                }
+            });
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (currentPageIndex < pages.length - 1) {
+                currentPageIndex++;
+                updatePageVisibility();
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentPageIndex > 0) {
+                currentPageIndex--;
+                updatePageVisibility();
+            }
+        });
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Dev Portfolio - Interactive Storybook</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --page-background: #f4f1de;
+            --text-color: #2c3e50;
+            --accent-color: #8e44ad;
+            --page-border-color: #a0522d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Open Sans', sans-serif;
+            background-color: #d2b48c;
+            perspective: 1500px;
+            overflow: hidden;
+        }
+
+        .desk {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            background-color: #8B4513;
+            transform: perspective(1500px) rotateX(30deg);
+            box-shadow: 0 -10px 20px rgba(0,0,0,0.3);
+        }
+
+        .book-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotateX(20deg) rotateY(-10deg);
+            width: 800px;
+            height: 600px;
+            transition: all 0.8s ease;
+        }
+
+        .book {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s ease;
+        }
+
+            .book.open {
+                transform: rotateY(-180deg);
+            }
+
+        .book-page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            transform-origin: left center;
+            backface-visibility: hidden;
+            background-color: #f4f1de;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.1);
+            border: 15px solid #a0522d;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page-front {
+            z-index: 2;
+            transform: rotateY(0deg);
+            background-color: white;
+        }
+
+        .page-back {
+            transform: rotateY(180deg);
+            background-color: white;
+        }
+
+        .page-content {
+            padding: 40px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .page-header {
+            font-family: 'Merriweather', serif;
+            color: var(--accent-color);
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .project-card {
+            background-color: rgba(142, 68, 173, 0.05);
+            border: 2px solid #e0e0e0;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+            .project-card:hover {
+                transform: scale(1.02);
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            }
+
+            .project-card img {
+                max-width: 100%;
+                height: 250px;
+                object-fit: cover;
+                margin-bottom: 15px;
+            }
+
+        .page-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+        }
+
+        .page-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: 'Merriweather', serif;
+            transition: background-color 0.3s ease;
+        }
+
+            .page-btn:hover {
+                background-color: #6c3483;
+            }
+
+        #introPage, #projectsPage, #skillsPage, #contactPage {
+            transform: rotateY(180deg);
+        }
+
+        @media (max-width: 900px) {
+            .book-container {
+                width: 95%;
+                height: 70%;
+                transform: translate(-50%, -50%) rotateX(0) rotateY(0);
+            }
+
+            .desk {
+                transform: perspective(1500px) rotateX(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="desk"></div>
+    <div class="book-container">
+        <div class="book">
+            <div class="book-page page-front" id="coverPage">
+                <div class="page-content">
+                    <h1 class="page-header">Game Dev Portfolio</h1>
+                    <p>Welcome to my digital storybook of game development adventures!</p>
+                </div>
+            </div>
+
+            <div class="book-page" id="introPage">
+                <div class="page-content">
+                    <h2 class="page-header">About Me</h2>
+                    <p>I'm a passionate game developer crafting interactive worlds and unforgettable experiences. My journey in game development is driven by creativity, innovation, and a love for storytelling through interactive media.</p>
+                </div>
+            </div>
+
+            <div class="book-page" id="projectsPage">
+                <div class="page-content">
+                    <h2 class="page-header">My Game Projects</h2>
+                    <div class="project-card">
+                        <img src="/api/placeholder/400/250" alt="Project Quantum">
+                        <h3>Project Quantum</h3>
+                        <p>A sci-fi puzzle platformer exploring time manipulation mechanics. Developed using Unity, this game challenges players to solve complex puzzles by controlling time itself.</p>
+                    </div>
+                    <div class="project-card">
+                        <img src="/api/placeholder/400/250" alt="Medieval Tactics">
+                        <h3>Medieval Tactics</h3>
+                        <p>A strategic RPG with innovative combat and storytelling systems. Built in Unreal Engine, this game offers deep tactical gameplay and rich narrative experiences.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="book-page" id="skillsPage">
+                <div class="page-content">
+                    <h2 class="page-header">Skills & Technologies</h2>
+                    <ul>
+                        <li>Game Engines: Unity, Unreal Engine</li>
+                        <li>Programming Languages: C#, C++, Python</li>
+                        <li>Game Design: Mechanics Development, Level Design</li>
+                        <li>Tools: Blender, Photoshop, Git</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="book-page" id="contactPage">
+                <div class="page-content">
+                    <h2 class="page-header">Let's Connect</h2>
+                    <p>Interested in collaboration or want to discuss game development?</p>
+                    <div class="social-links">
+                        <a href="#">GitHub</a>
+                        <a href="#">LinkedIn</a>
+                        <a href="#">Portfolio</a>
+                        <a href="#">Email</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="book-page page-back">
+                <div class="page-content">
+                    <h2 class="page-header">Thank You</h2>
+                    <p>Thanks for exploring my game development journey. Each page tells a story of creativity, challenge, and passion.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-controls">
+            <button class="page-btn" id="prevPage">Previous</button>
+            <button class="page-btn" id="nextPage">Next</button>
+        </div>
+    </div>
+
+    <script>
+        const book = document.querySelector('.book');
+        const prevBtn = document.getElementById('prevPage');
+        const nextBtn = document.getElementById('nextPage');
+        const pages = ['coverPage', 'introPage', 'projectsPage', 'skillsPage', 'contactPage'];
+        let currentPageIndex = 0;
+
+        function updatePageVisibility() {
+            pages.forEach((pageId, index) => {
+                const page = document.getElementById(pageId);
+                if (index <= currentPageIndex) {
+                    page.style.transform = 'rotateY(0deg)';
+                } else {
+                    page.style.transform = 'rotateY(180deg)';
+                }
+            });
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (currentPageIndex < pages.length - 1) {
+                currentPageIndex++;
+                updatePageVisibility();
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentPageIndex > 0) {
+                currentPageIndex--;
+                updatePageVisibility();
+            }
+        });
+    </script>
 </body>
 </html>

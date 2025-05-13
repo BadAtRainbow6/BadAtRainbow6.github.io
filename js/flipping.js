@@ -1,17 +1,24 @@
-// script.js
-const pages = document.querySelectorAll('.page');
+const pages = document.querySelectorAll(".page");
 let current = 0;
 
-document.getElementById('next').addEventListener('click', () => {
+function flipPage(index) {
+    pages[index].style.transform = 'rotateY(-180deg)';
+}
+
+function unflipPage(index) {
+    pages[index].style.transform = 'rotateY(0deg)';
+}
+
+document.getElementById("next").onclick = () => {
     if (current < pages.length - 1) {
-        pages[current].style.transform = 'rotateY(-180deg)';
+        flipPage(current);
         current++;
     }
-});
+};
 
-document.getElementById('prev').addEventListener('click', () => {
+document.getElementById("prev").onclick = () => {
     if (current > 0) {
         current--;
-        pages[current].style.transform = 'rotateY(0deg)';
+        unflipPage(current);
     }
-});
+};

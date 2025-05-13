@@ -1,142 +1,21 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Dev Portfolio - Interactive Storybook</title>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <title>My Storybook Portfolio</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="canvas-container"></div>
-    <div class="desk"></div>
-    <div class="book-container">
-        <div class="book">
-            <div class="book-page page-front" id="coverPage">
-                <div class="page-content">
-                    <h1 class="page-header">Game Dev Portfolio</h1>
-                    <p>Welcome to my digital storybook of game development adventures!</p>
-                    <div class="cover-image">
-                        <img src="/api/placeholder/400/250" alt="Portfolio Cover">
-                    </div>
-                </div>
-            </div>
-
-            <div class="book-page" id="introPage">
-                <div class="page-content">
-                    <h2 class="page-header">About Me</h2>
-                    <p>I'm a passionate game developer crafting interactive worlds and unforgettable experiences. My journey in game development is driven by creativity, innovation, and a love for storytelling through interactive media.</p>
-                    <div class="about-image">
-                        <img src="/api/placeholder/300/300" alt="Developer Photo">
-                    </div>
-                </div>
-            </div>
-
-            <div class="book-page" id="projectsPage">
-                <div class="page-content">
-                    <h2 class="page-header">My Game Projects</h2>
-                    <div class="project-card" data-project="quantum">
-                        <img src="/api/placeholder/400/250" alt="Project Quantum">
-                        <h3>Project Quantum</h3>
-                        <p>A sci-fi puzzle platformer exploring time manipulation mechanics. Developed using Unity, this game challenges players to solve complex puzzles by controlling time itself.</p>
-                    </div>
-                    <div class="project-card" data-project="medieval">
-                        <img src="/api/placeholder/400/250" alt="Medieval Tactics">
-                        <h3>Medieval Tactics</h3>
-                        <p>A strategic RPG with innovative combat and storytelling systems. Built in Unreal Engine, this game offers deep tactical gameplay and rich narrative experiences.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="book-page" id="skillsPage">
-                <div class="page-content">
-                    <h2 class="page-header">Skills & Technologies</h2>
-                    <div class="skills-container">
-                        <div class="skill-category">
-                            <h3>Game Engines</h3>
-                            <div class="skill-item" data-level="90">Unity</div>
-                            <div class="skill-item" data-level="80">Unreal Engine</div>
-                        </div>
-                        <div class="skill-category">
-                            <h3>Programming</h3>
-                            <div class="skill-item" data-level="95">C#</div>
-                            <div class="skill-item" data-level="85">C++</div>
-                            <div class="skill-item" data-level="75">Python</div>
-                        </div>
-                        <div class="skill-category">
-                            <h3>Game Design</h3>
-                            <div class="skill-item" data-level="90">Mechanics Development</div>
-                            <div class="skill-item" data-level="85">Level Design</div>
-                        </div>
-                        <div class="skill-category">
-                            <h3>Tools</h3>
-                            <div class="skill-item" data-level="80">Blender</div>
-                            <div class="skill-item" data-level="75">Photoshop</div>
-                            <div class="skill-item" data-level="90">Git</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="book-page" id="contactPage">
-                <div class="page-content">
-                    <h2 class="page-header">Let's Connect</h2>
-                    <p>Interested in collaboration or want to discuss game development?</p>
-                    <form id="contact-form" class="contact-form">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" rows="4" required></textarea>
-                        </div>
-                        <button type="submit" class="submit-btn">Send Message</button>
-                    </form>
-                    <div class="social-links">
-                        <a href="#" class="social-link">GitHub</a>
-                        <a href="#" class="social-link">LinkedIn</a>
-                        <a href="#" class="social-link">Portfolio</a>
-                        <a href="#" class="social-link">Email</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="book-page page-back">
-                <div class="page-content">
-                    <h2 class="page-header">Thank You</h2>
-                    <p>Thanks for exploring my game development journey. Each page tells a story of creativity, challenge, and passion.</p>
-                    <div class="thank-you-image">
-                        <img src="/api/placeholder/400/250" alt="Thank You">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="page-controls">
-            <button class="page-btn" id="prevPage">Previous</button>
-            <span id="pageIndicator">1/6</span>
-            <button class="page-btn" id="nextPage">Next</button>
-        </div>
+    <div class="book">
+        <div class="page cover-front">My Portfolio</div>
+        <div class="page">About Me</div>
+        <div class="page">Project 1</div>
+        <div class="page">Project 2</div>
+        <div class="page cover-back">The End</div>
     </div>
-
-    <!-- Project Modal -->
-    <div id="projectModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <div id="modalContent"></div>
-        </div>
-    </div>
-
-    <script src="js/three-setup.js"></script>
-    <script src="js/book.js"></script>
-    <script src="js/projects.js"></script>
-    <script src="js/skills.js"></script>
-    <script src="js/contact.js"></script>
+    <button id="prev">◀</button>
+    <button id="next">▶</button>
+    <script src="flipping.js"></script>
 </body>
 </html>

@@ -7,16 +7,61 @@
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="book">
-        <div class="page" id="page1">📖<h1>Welcome</h1><p>This is my storybook portfolio.</p></div>
-        <div class="page" id="page2"><h1>About Me</h1><p>I'm a developer who loves narrative UX.</p></div>
-        <div class="page" id="page3"><h1>Projects</h1><ul><li>MUD Game</li><li>ChatGPT Bot</li></ul></div>
-        <div class="page" id="page4"><h1>Contact</h1><p>Email: me@example.com</p></div>
+    <div class="table">
+        <div class="book">
+
+            <!--Sheet 1-->
+            <div class="sheet" id="sheet1">
+                <div class="page left">
+                    <h1>📖 Welcome</h1>
+                    <ul>
+                        <li><a href="#" class="jump" data-sheet="0">About Me</a></li>
+                        <li><a href="#" class="jump" data-sheet="1">Projects</a></li>
+                        <li><a href="#" class="jump" data-sheet="2">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="page right">
+                    <h1>About Me</h1>
+                    <p>I love storytelling through code.</p>
+                </div>
+            </div>
+
+            <!--Sheet 2-->
+            <div class="sheet" id="sheet2">
+                <div class="page left">
+                    <h1>Projects</h1>
+                    <ul>
+                        <li>MUD Game</li>
+                        <li>ChatGPT Bot</li>
+                    </ul>
+                </div>
+                <div class="page right">
+                    <h1>More Projects</h1>
+                    <p>More projects go here.</p>
+                </div>
+            </div>
+
+            <!--Sheet 3-->
+            <div class="sheet" id="sheet3">
+                <div class="page left">
+                    <h1>Contact</h1>
+                    <p>Email: me@example.com</p>
+                    <a href="#" class="jump" data-sheet="0">⬅ Back to Start</a>
+                </div>
+                <div class="page right">
+                    <h1>🎉 The End</h1>
+                    <p>Thanks for reading!</p>
+                </div>
+            </div>
+
+        </div>
     </div>
-    <div class="buttons">
+
+    <div class="controls">
         <button id="prev">◀ Prev</button>
         <button id="next">Next ▶</button>
     </div>
+
     <script src="flipping.js"></script>
 </body>
 </html>

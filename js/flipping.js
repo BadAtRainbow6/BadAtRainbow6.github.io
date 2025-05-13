@@ -1,17 +1,9 @@
 const pages = document.querySelectorAll(".page");
 let current = 0;
 
-function flipPage(index) {
-    pages[index].style.transform = 'rotateY(-180deg)';
-}
-
-function unflipPage(index) {
-    pages[index].style.transform = 'rotateY(0deg)';
-}
-
 document.getElementById("next").onclick = () => {
-    if (current < pages.length - 1) {
-        flipPage(current);
+    if (current < pages.length) {
+        pages[current].style.transform = "rotateY(-180deg)";
         current++;
     }
 };
@@ -19,6 +11,6 @@ document.getElementById("next").onclick = () => {
 document.getElementById("prev").onclick = () => {
     if (current > 0) {
         current--;
-        unflipPage(current);
+        pages[current].style.transform = "rotateY(0deg)";
     }
 };

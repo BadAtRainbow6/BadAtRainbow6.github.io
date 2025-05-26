@@ -1,40 +1,49 @@
-const sheets = document.querySelectorAll('.sheet');
+const pages = document.querySelectorAll('.page');
 let current = 0;
 
-function updateSheets(index) {
-    sheets.forEach((sheet, i) => {
-        if (i < index) {
-            sheet.classList.add('flipped');
+function updateZIndexes() {
+    pages.forEach((page, i) => {
+        if (page.classList.contains('flipped')) {
+            // Pages flipped to the left should stack from bottom up
+            page.style.zIndex = i + 1;
         } else {
-            sheet.classList.remove('flipped');
+            // Pages still on the right should stack top down
+            page.style.zIndex = pages.length - i;
         }
     });
-    current = index;
 }
 
-// Button Controls
-document.getElementById('next').addEventListener('click', () => {
-    if (current < sheets.length) {
-        updateSheets(current + 1);
+function flipForward() {
+    if (current < pages.length) {
+        pages[current].classList.add('flipped');
+        current++;
+        updateZIndexes(); // Recalculate after each flip
     }
-});
+}
 
-document.getElementById('prev').addEventListener('click', () => {
+function flipBackward() {
     if (current > 0) {
-        updateSheets(current - 1);
+        current--;
+        pages[current].classList.remove('flipped');
+        updateZIndexes(); // Recalculate after each flip
     }
-});
+}
 
-// Jump Links
+document.getElementById('next').addEventListener('click', flipForward);
+document.getElementById('prev').addEventListener('click', flipBackward);
+
 document.querySelectorAll('.jump').forEach(link => {
     link.addEventListener('click', e => {
         e.preventDefault();
-        const target = parseInt(link.dataset.sheet);
+        const target = parseInt(link.dataset.page);
         if (!isNaN(target)) {
-            updateSheets(target);
+            if (target > current) {
+                while (current < target) flipForward();
+            } else if (target < current) {
+                while (current > target) flipBackward();
+            }
         }
     });
 });
 
-// Init
-updateSheets(0);
+updateZIndexes();

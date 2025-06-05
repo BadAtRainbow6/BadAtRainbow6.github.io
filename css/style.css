@@ -1,6 +1,11 @@
 @font-face {
-    font-family: "Swoosh";
-    src: url("../fonts/SWOOSH.ttf") format("opentype");
+    font-family: 'Runavess';
+    src: url('../fonts/Runavess.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'Swoosh';
+    src: url('../fonts/SWOOSH.ttf') format('truetype');
 }
 
 body {
@@ -15,6 +20,10 @@ body {
     justify-content: center;
     height: 100vh;
     overflow: hidden;
+}
+
+.title {
+    font-family: "Runavess", serif;
 }
 
 .rounded{

@@ -22,6 +22,35 @@ body {
     display: flex;
 }
 
+.bigText{
+    font-size: 20px;
+}
+
+.contact-front {
+    display: flex;
+    align-items: center; /* vertically center */
+    justify-content: center; /* horizontally center */
+    height: 100%; /* required for vertical centering */
+    text-align: center;
+}
+
+.icon {
+    display: flex;
+    gap: 2em;
+    align-items: center;
+}
+
+    .icon img {
+        max-width: 80px;
+        height: auto;
+        transition: transform 0.3s ease;
+    }
+
+        .icon img:hover {
+            transform: scale(1.1);
+            cursor: pointer;
+        }
+
 .table {
     background: radial-gradient(#a67c52, #5c3a1e);
     padding: 30px;

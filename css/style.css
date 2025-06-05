@@ -17,6 +17,37 @@ body {
     overflow: hidden;
 }
 
+.rounded{
+    border-radius: 24px;
+}
+
+.resume {
+    background-color: #d2691e;
+    border: 2px solid #8b4513;
+    border-radius: 12px;
+    padding: 6px 12px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s ease, background-color 0.3s ease;
+    /* Center horizontally */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1em auto;
+    width: fit-content;
+}
+
+    .resume:hover {
+        background-color: #ff8c00;
+        transform: scale(1.03);
+    }
+
+    .resume a {
+        color: white;
+        font-size: 16px;
+        text-shadow: 1px 1px 1px #000;
+        text-decoration: none;
+    }
+
 .horizontal{
     align-content: center;
     display: flex;
